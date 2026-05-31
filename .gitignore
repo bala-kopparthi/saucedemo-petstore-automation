@@ -1,0 +1,77 @@
+# =============================================================================
+# .gitignore for Playwright + Python + pytest portfolio project
+# Grouped by purpose for reviewers
+# =============================================================================
+# --- Python bytecode / build artifacts ---
+# Generated every time Python runs. Never commit.
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+# --- Virtual environments ---
+# Machine-specific. Anyone cloning re-creates their own with `python -m venv .venv`.
+.venv/
+venv/
+env/
+ENV/
+# --- pytest + coverage ---
+# Caches and reports, per-machine.
+.pytest_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+# --- IDE / editor config ---
+# .idea/ is PyCharm. Keep your IDE preferences out of the repo.
+.idea/
+.vscode/
+*.swp
+*.swo
+# --- Playwright artifacts ---
+# Browsers, traces, videos — generated per run, often large.
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+# --- AI tool dotfiles (explicit guardrail) ---
+# Listing them stops accidental commits.
+.cursor/
+.claude/
+.chatgpt/
+.aider*
+CLAUDE.md
+claude.md
+.cursorrules
+# --- Allure ---
+# Both raw results and rendered report regenerate on every run.
+allure-results/
+allure-report/
+.allure/
+# --- Local logs, screenshots, reports ---
+reports/
+logs/
+*.log
+screenshots/
+videos/
+# --- Environment / secrets ---
+# .env contains real values (we'll add saucedemo creds later).
+# .env.example IS committed as a template — the leading `!` un-ignores it.
+.env
+.env.local
+.env.*.local
+!.env.example
+# --- macOS Finder noise ---
+.DS_Store
+.AppleDouble
+.LSOverride
+# --- Other OS junk (for future Windows/Linux contributors) ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
