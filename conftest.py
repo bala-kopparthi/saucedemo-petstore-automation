@@ -37,3 +37,30 @@ def saucedemo_credentials() -> dict[str, str]:
         "username": os.getenv("SAUCEDEMO_VALID_USERNAME", "standard_user"),
         "password": os.getenv("SAUCEDEMO_VALID_PASSWORD", "secret_sauce"),
     }
+from playwright.sync_api import Page
+
+from ui.pages.inventory_page import InventoryPage
+from ui.pages.login_page import LoginPage
+
+@pytest.fixture
+def logged_in_inventory(
+    page: Page, base_url: str, saucedemo_credentials: dict
+) -> InventoryPage:
+    """Log in as standard_user and return an InventoryPage instance.
+
+    Use this as the starting fixture for any test that needs an
+    authenticated session on the inventory screen. Avoids repeating
+    login boilerplate in every test file.
+
+    Usage in a test:
+        def test_something(logged_in_inventory: InventoryPage) -> None:
+            logged_in_inventory.add_to_cart("Sauce Labs Backpack")
+    """
+    login = LoginPage(page, base_url)
+    login.navigate()
+    login.login(
+        saucedemo_credentials["username"],
+        saucedemo_credentials["password"],
+    )
+    return InventoryPage(page, base_url)
+
