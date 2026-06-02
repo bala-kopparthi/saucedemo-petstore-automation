@@ -1,7 +1,7 @@
 ================================================================================
 SauceDemo UI Test Scenarios — flows.txt
 ================================================================================
-Project    : SauceDemo + Petstore Automation Test Strategy
+Project    : SauceDemo + Petstore Automation Test Design Document
 Part       : 1 (SauceDemo UI Automation)
 Target App : https://www.saucedemo.com/
 Stack      : Python 3.14 + Playwright + pytest + Page Object Model
