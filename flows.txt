@@ -1,0 +1,169 @@
+================================================================================
+SauceDemo UI Test Scenarios — flows.txt
+================================================================================
+Project    : SauceDemo + Petstore Automation Test Strategy
+Part       : 1 (SauceDemo UI Automation)
+Target App : https://www.saucedemo.com/
+Stack      : Python 3.14 + Playwright + pytest + Page Object Model
+Author     : Bala Kopparthi
+================================================================================
+1. PURPOSE
+================================================================================
+This document captures the UI test scenarios selected for SauceDemo automation,
+the explanation of  each category of test, and the listed out-of-scope items explicitly.
+
+Testers or Reviewers should read this BEFORE the test code — this file explains the reason behind the choice of these tests (why these tests)
+================================================================================
+2. TEST DESIGN PHILOSOPHY
+================================================================================
+Scenarios were selected by applying three filters in order:
+1. REVENUE-CRITICAL PATHS:
+    Real user - Complete end-to-end flow test (S3)
+
+2. BOUNDARY & ERROR PATHS:
+    Negative validation,  locked accounts, and documented UI defects.
+
+3. UNIQUE-TO-THIS-APP COVERAGE
+    SauceDemo's feature and its different types of users
+    (problem_user, performance_glitch_user, error_user, visual_user)
+
+    These are built-in negative-test fixtures - that are covered in P2/P3 tests.
+================================================================================
+3. SCENARIO INVENTORY (15 scenarios total)
+================================================================================
+--------------------------------------------------------------------------------
+TIER P0 — SMOKE  (runs on every commit; Chromium-only; target <60s total)
+--------------------------------------------------------------------------------
+S1  Login with standard_user lands on inventory page with 6 products visible
+    Why : Auth + initial render. If this breaks, nothing else can run.
+    Mark/Tag: @pytest.mark.smoke
+
+S2  Add one product to cart → cart badge increments to 1
+    Why : Core shopping interaction; cart state is foundational.
+   Mark/Tag: @pytest.mark.smoke
+
+S3  Full happy-path checkout (login → add → checkout → finish → Thank You)
+    Why : Revenue-critical end-to-end. Single most important test in suite.
+  Mark/Tag: @pytest.mark.smoke, @pytest.mark.e2e
+
+S4  Logout via hamburger menu returns user to login page
+    Why : Session-teardown bugs are common and easily missed.
+   Mark/Tag: @pytest.mark.smoke
+--------------------------------------------------------------------------------
+TIER P1 — REGRESSION  (runs on PRs and nightly; Cross-Browser scenario covered here)
+--------------------------------------------------------------------------------
+Execution: each test runs against Chromium(Chrome) + Firefox(firefox) + WebKit (safari)
+R1  - to verify inventory by price (low→high, high→low); verify actual order
+    Why :  To Validate the bugs that are common
+    Mark/Tag: @pytest.mark.regression
+
+R2  - to verify inventory by name (A→Z, Z→A); verify actual order
+    Why : To Validate alphabetic-sort coverage
+    Mark/Tag: @pytest.mark.regression
+
+R3  Add multiple products, remove one from cart page, verify final state
+    Why : Cart state management across page transitions.
+    Mark/Tag: @pytest.mark.regression
+
+R4  Verify checkout summary math (line-item subtotals + tax = grand total)
+    Why : To Validate the grand-totals in real e-commerce.
+    Mark/Tag: @pytest.mark.regression
+
+R5  "Continue Shopping" from cart returns to inventory; cart state preserved
+    Why : Common navigation pattern; state preservation is easy to break.
+    Mark/Tag: @pytest.mark.regression
+--------------------------------------------------------------------------------
+TIER P2 — NEGATIVE / VALIDATION  (Chromium-only)
+--------------------------------------------------------------------------------
+N1  Login with empty username → error "Username is required" displayed
+    Why : Standard form validation.
+    Mark/Tag: @pytest.mark.negative
+
+N2  Login with locked_out_user → error "Sorry, this user has been locked out" is expected
+    Why : Business-logic-driven error path.
+    Mark/Tag: @pytest.mark.negative
+
+N3  Checkout step 1 with empty fields → per-field validation errors
+    Why : Required-field validation on checkout.
+    Mark/Tag: @pytest.mark.negative
+
+N4  error_user known defect — Last Name field rejects keyboard input
+    Why : SauceDemo's error_user exhibits a documented UI defect — the Last
+          Name input on checkout step 1 does not accept typed characters.
+          This test ASSERTS THE FIELD SHOULD WORK (positive intent) and is
+          marked @pytest.mark.xfail.
+         CI reports XFAIL (yellow, non-blocking).
+          The day SauceDemo fixes the bug, pytest will report XPASS — our
+          signal to remove the xfail marker and promote the test.
+
+          This documents a known defect in CI.
+
+    Mark/Tag: @pytest.mark.negative, @pytest.mark.xfail(reason="error_user: Last Name field rejects input")
+--------------------------------------------------------------------------------
+TIER P3 — USER-MATRIX  (parametrized; Chromium-only)
+--------------------------------------------------------------------------------
+P1  Parametrized login: standard_user, problem_user, performance_glitch_user,
+    visual_user — all should reach inventory page
+    Why : Single test  - four parameters - Demonstrates pytest parametrize fluency and unique user matrix.
+    Mark/Tag: @pytest.mark.regression, @pytest.mark.parametrize_users
+
+P2  performance_glitch_user: capture inventory page load time;
+    assert load completes under N seconds
+    Why : Soft performance baseline.
+    Mark/Tag: @pytest.mark.regression
+================================================================================
+4. CROSS-BROWSER STRATEGY
+================================================================================
+SCOPE     : P1 Regression scenarios (R1–R5) only.
+BROWSERS  : Chromium (Blink) + Firefox (Gecko) + WebKit (Safari engine)
+EXECUTION : pytest -m regression --browser chromium --browser firefox --browser webkit
+
+P0 Smoke runs Chromium-only for fast CI feedback (<60s cycle)
+
+P2/P3 run Chromium-only — defects there are application-level, not browser-rendering, so cross-browser execution adds runtime without signal.
+
+This selective cross-browser approach trades exhaustive coverage for fast, meaningful feedback — a deliberate test-economics decision.
+================================================================================
+5. EXPLICITLY OUT OF SCOPE (with rationale)
+================================================================================
+The following are intentionally NOT automated:
+1.  The "error_user" deep-dive tests beyond N4
+    → error_user has multiple undocumented bugs; testing speculative behavior is fragile. N4 covers the documented one.
+
+2. The "problem_user" visual-difference tests (broken images, layout shifts)
+    → Visual regression needs snapshot tooling.
+      Outside Playwright-only scope. Listed in README as future work.
+
+3. Hamburger menu UI polish (animations, transitions)
+    → Not a user-facing behavior; pure UI polish.
+
+4. "Reset App State" button
+    → Admin utility, not user behavior.
+
+5. About link from hamburger menu
+    → Off-site (saucelabs.com); not part of the SauceDemo flow under test.
+
+6. Deep performance benchmarks
+    → Real perf testing needs proper tooling. P2 is a soft baseline only.
+
+7. SauceDemo's backend / API
+    → Part 2 of this project covers a different API (Petstore Swagger).
+================================================================================
+6. pytest MARKER REFERENCE
+================================================================================
+@pytest.mark.smoke              P0 critical-path tests
+@pytest.mark.regression         P1 broader functional coverage
+@pytest.mark.e2e                End-to-end journey (login → checkout → confirm)
+@pytest.mark.negative           Error paths, validation, known defects
+@pytest.mark.parametrize_users  Tests run across multiple user types
+@pytest.mark.xfail(reason=...)  Expected to fail; documents a known defect
+================================================================================
+7. SUITE TOTALS
+================================================================================
+Total scenarios          : 15
+Total executions         : 25  (P0: 4, P1: 5×3 browsers = 15, P2: 4, P3: 2)
+Expected local runtime   : ~2 min headless on M-series Mac
+Expected CI runtime      : ~5 min (includes browser cold-start)
+================================================================================
+END OF DOCUMENT
+================================================================================
