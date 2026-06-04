@@ -137,6 +137,9 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
+      - name: Strip stray .git from the generated report
+        run: sudo rm -rf allure-history/.git
+        
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
