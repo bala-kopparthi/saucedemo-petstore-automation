@@ -8,6 +8,7 @@ Scenarios covered:
 """
 
 import pytest
+import allure
 from playwright.sync_api import Page, expect
 
 from ui.data.products import BACKPACK, SAMPLE_PRODUCTS
@@ -56,10 +57,22 @@ def test_checkout_step_one_empty_fields_show_validation_errors(
 
 
 # ── N4 ────────────────────────────────────────────────────────────────
-
+@allure.feature("Checkout")
+@allure.story("Known defect — error_user Last Name field")
+@allure.severity(allure.severity_level.MINOR)
+@allure.label("defect_type", "known / tracked")
+@allure.description(
+    "DOCUMENTED SAUCEDEMO DEFECT (not an accidental skip).\n\n"
+    "For `error_user`, the Last Name field on Checkout Step One rejects "
+    "typed characters. This test asserts the CORRECT behaviour (the field "
+    "SHOULD accept input), so against the live broken site it fails on "
+    "purpose and pytest reports XFAIL — Allure shows this as grey.\n\n"
+    "This is the EXPECTED state. The day SauceDemo fixes the bug, the test will XPASS, which is our signal to remove the xfail marker and promote it to a normal passing test."
+)
 @pytest.mark.negative
 @pytest.mark.ui
 @pytest.mark.xfail(reason="error_user: Last Name field rejects keyboard input")
+
 def test_error_user_can_type_last_name_at_checkout(
     page: Page, base_url: str
 ) -> None:
@@ -129,4 +142,4 @@ def test_checkout_summary_math_is_correct(
     assert round(subtotal + tax, 2) == round(grand_total, 2), (
         f"Math mismatch: subtotal {subtotal} + tax {tax} != total {grand_total}"
     )
-    
+

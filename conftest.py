@@ -7,6 +7,7 @@ to every test under this directory tree without `import`. We can add more common
 
 import os
 import pytest
+import allure
 from dotenv import load_dotenv
 #widening the existing Page import and adding Generator
 from collections.abc import Generator
@@ -116,4 +117,35 @@ def created_pet(pet_client: PetClient) -> Generator[dict, None, None]:
 
     # Teardown: best-effort delete; ignore the result if it's already gone.
     pet_client.delete(pet["id"])
+
+# ── Allure failure diagnostics ──────────────────────────────────────────
+# pytest calls this hook after each test phase (setup/call/teardown).
+# This is "call" phase: if the test failed OR was skipped/xfail, and it used a live `page` and attach a screenshot + the final URL to the Allure report.
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when != "call" or not (report.failed or report.skipped):
+        return  # only act on the test body, only when something went wrong
+
+    # `page` is available for UI tests (directly or via logged_in_inventory).
+    page = item.funcargs.get("page")
+    if page is None:
+        return  # API-only test — no screen to capture
+
+    try:
+        allure.attach(
+            page.screenshot(full_page=True),
+            name="screenshot_on_failure",
+            attachment_type=allure.attachment_type.PNG,
+        )
+        allure.attach(
+            page.url,
+            name="final_url",
+            attachment_type=allure.attachment_type.TEXT,
+        )
+    except Exception:
+        # Never let diagnostics crash the run — best-effort only.
+        pass
 
