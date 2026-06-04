@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: "0 6 * * *"   # nightly at 06:00 UTC (default branch only)
 
+# The publish job needs to write to the gh-pages branch.
+permissions:
+  contents: write
+
 jobs:
   # ── P0: fast gate on every commit ─────────────────────────────────────
   smoke:
@@ -103,3 +107,39 @@ jobs:
         with:
           name: allure-results-validation
           path: allure-results
+
+  # ── Publish the Allure report to GitHub Pages (with history) ──────────
+  publish-report:
+    name: Publish Allure report
+    if: always()                 # publish even if tests failed or jobs were skipped
+    needs: [smoke, regression, validation]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all Allure results
+        uses: actions/download-artifact@v5
+        with:
+          pattern: allure-results-*
+          merge-multiple: true
+          path: allure-results
+
+      - name: Check out existing gh-pages branch (for history)
+        uses: actions/checkout@v5
+        continue-on-error: true   # first run: gh-pages doesn't exist yet — that's fine
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build Allure report with history
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_history: allure-history
+          keep_reports: 20
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
