@@ -1,6 +1,8 @@
 name: CI
 
 on:
+
+  workflow_dispatch:        # adds a manual "Run workflow" button in the Actions tab
   push:
     branches: [main]
   pull_request:
@@ -46,7 +48,7 @@ jobs:
   # ── P1: cross-browser regression on PRs + nightly ────────────────────
   regression:
     name: Regression (cross-browser)
-    if: github.event_name == 'pull_request' || github.event_name == 'schedule'
+      if: github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -80,7 +82,7 @@ jobs:
   # ── P2: negative/validation, Chromium-only on PRs + nightly ──────────
   validation:
     name: Validation (negative, Chromium)
-    if: github.event_name == 'pull_request' || github.event_name == 'schedule'
+      if: github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -139,7 +141,7 @@ jobs:
 
       - name: Strip stray .git from the generated report
         run: sudo rm -rf allure-history/.git
-        
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
