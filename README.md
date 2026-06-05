@@ -5,6 +5,9 @@ This is for demonstrating End-to-end test automation portfolio project:
 - **Part 1 — UI:** [SauceDemo (Swag Labs)](https://www.saucedemo.com/) automated with Playwright + Python + pytest using the Page Object Model.
 - **Part 2 — API:** [Petstore Swagger](https://petstore.swagger.io/) Pet endpoint tests using Playwright's APIRequestContext + pytest.
 
+[![CI](https://github.com/bala-kopparthi/saucedemo-petstore-automation/actions/workflows/ci.yml/badge.svg)](https://github.com/bala-kopparthi/saucedemo-petstore-automation/actions/workflows/ci.yml)
+[![Allure Report](https://img.shields.io/badge/Allure-Live%20Report-success)](https://bala-kopparthi.github.io/saucedemo-petstore-automation/)
+
 > **Status:** scaffolding in progress — sections below will be filled in as the project is built step by step.
 
 ---
@@ -33,6 +36,12 @@ _TBD — added once `requirements.txt` is in place._
 _TBD — locally, from PyCharm, from GitHub Actions, from Jenkins._
 
 ## Reporting
+
+**📊 Live report (auto-published by CI):** <https://bala-kopparthi.github.io/saucedemo-petstore-automation/>
+
+This URL always serves the latest CI run, published automatically to GitHub Pages
+by the `publish-report` job in `.github/workflows/ci.yml`. The instructions below
+are for generating the same report **locally**.
 
 This suite uses [Allure](https://allurereport.org/) for rich, leadership-friendly
 reports — charts, history trends, and per-test failure evidence (screenshots + URLs).
