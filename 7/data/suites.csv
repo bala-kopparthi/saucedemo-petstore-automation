@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"S1: valid login navigates to /inventory.html with 6 products.","338","test_standard_user_login_lands_on_inventory[chromium]","ui.tests","2026-06-05","passed","2026-06-05","","test_login","",""
+"A1: POST /pet returns 200 and the response echoes id, name, status.","125","test_create_pet_returns_200_and_echoes_body","api.tests","2026-06-05","passed","2026-06-05","","test_pet_api","",""
+"S4: hamburger menu → Logout → user lands back on login page.","1274","test_logout_returns_to_login_page[chromium]","ui.tests","2026-06-05","passed","2026-06-05","","test_login","",""
+"S3: complete a purchase from inventory through order confirmation.","290","test_full_checkout_happy_path[chromium]","ui.tests","2026-06-05","passed","2026-06-05","","test_e2e","",""
+"S2: adding one product makes the cart badge show 1.","57","test_add_single_product_increments_cart_badge[chromium]","ui.tests","2026-06-05","passed","2026-06-05","","test_cart","",""
+"A2: GET /pet/{id} returns the pet created by the fixture.","12","test_get_returns_the_created_pet","api.tests","2026-06-05","passed","2026-06-05","","test_pet_api","",""
