@@ -19,6 +19,17 @@ jobs:
   smoke:
     name: Smoke (Chromium)
     runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: http://localhost:8080/v2
+    services:
+      petstore:
+        image: swaggerapi/petstore
+        env:
+          SWAGGER_HOST: http://localhost:8080
+          SWAGGER_URL: http://localhost:8080
+          SWAGGER_BASE_PATH: /v2
+        ports:
+          - 8080:8080
     steps:
       - uses: actions/checkout@v5
 
@@ -26,7 +37,19 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.14"
-
+      - name: Wait for Petstore API to be ready
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/v2/pet/1 || true)
+            if [ "$code" != "000" ]; then
+              echo "Petstore responding (HTTP $code)"
+              exit 0
+            fi
+            echo "Waiting for Petstore... attempt $i"
+            sleep 2
+          done
+          echo "Petstore did not become ready in time"
+          exit 1
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -50,6 +73,17 @@ jobs:
     name: Regression (cross-browser)
     if: github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: http://localhost:8080/v2
+    services:
+      petstore:
+        image: swaggerapi/petstore
+        env:
+          SWAGGER_HOST: http://localhost:8080
+          SWAGGER_URL: http://localhost:8080
+          SWAGGER_BASE_PATH: /v2
+        ports:
+          - 8080:8080
     steps:
       - uses: actions/checkout@v5
 
@@ -65,6 +99,20 @@ jobs:
 
       - name: Install Playwright (all browsers)
         run: playwright install --with-deps
+
+      - name: Wait for Petstore API to be ready
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/v2/pet/1 || true)
+            if [ "$code" != "000" ]; then
+              echo "Petstore responding (HTTP $code)"
+              exit 0
+            fi
+            echo "Waiting for Petstore... attempt $i"
+            sleep 2
+          done
+          echo "Petstore did not become ready in time"
+          exit 1
 
       - name: Run regression tests (Chromium + Firefox + WebKit)
         run: >
@@ -84,6 +132,17 @@ jobs:
     name: Validation (negative, Chromium)
     if: github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: http://localhost:8080/v2
+    services:
+      petstore:
+        image: swaggerapi/petstore
+        env:
+          SWAGGER_HOST: http://localhost:8080
+          SWAGGER_URL: http://localhost:8080
+          SWAGGER_BASE_PATH: /v2
+        ports:
+          - 8080:8080
     steps:
       - uses: actions/checkout@v5
 
@@ -99,6 +158,20 @@ jobs:
 
       - name: Install Playwright (Chromium only)
         run: playwright install --with-deps chromium
+
+      - name: Wait for Petstore API to be ready
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/v2/pet/1 || true)
+            if [ "$code" != "000" ]; then
+              echo "Petstore responding (HTTP $code)"
+              exit 0
+            fi
+            echo "Waiting for Petstore... attempt $i"
+            sleep 2
+          done
+          echo "Petstore did not become ready in time"
+          exit 1
 
       - name: Run negative tests
         run: pytest -m negative --browser chromium --alluredir=allure-results
