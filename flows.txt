@@ -120,7 +120,7 @@ EXECUTION : pytest -m regression --browser chromium --browser firefox --browser 
 
 P0 Smoke runs Chromium-only for fast CI feedback (<60s cycle)
 
-P2/P3 run Chromium-only — defects there are application-level, not browser-rendering, so cross-browser execution adds runtime without signal.
+P3 tests run Chromium-only — defects there are application-level, not browser-rendering, so cross-browser execution adds runtime without signal.
 
 This selective cross-browser approach trades exhaustive coverage for fast, meaningful feedback — a deliberate test-economics decision.
 ================================================================================

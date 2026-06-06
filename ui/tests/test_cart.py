@@ -25,13 +25,11 @@ def test_add_single_product_increments_cart_badge(
     """S2: adding one product makes the cart badge show 1."""
     inventory = logged_in_inventory
 
-    # Sanity: cart starts empty (badge absent → count 0)
+    # when cart starts empty
     assert inventory.cart_badge_count() == 0, "Cart should start empty"
 
-    # Act
     inventory.add_to_cart(BACKPACK)
 
-    # Assert
     assert inventory.cart_badge_count() == 1, "Badge should read 1 after one add"
 
 
@@ -45,7 +43,6 @@ def test_remove_one_item_from_cart_updates_state(
     """R3: add three products, remove one on the cart page, verify survivors."""
     inventory = logged_in_inventory
 
-    # Arrange: add all sample products from the inventory page
     for product in SAMPLE_PRODUCTS:
         inventory.add_to_cart(product)
     assert inventory.cart_badge_count() == len(SAMPLE_PRODUCTS)  # 3
@@ -81,15 +78,12 @@ def test_continue_shopping_returns_to_inventory_preserving_cart(
     inventory.add_to_cart(BIKE_LIGHT)
     assert inventory.cart_badge_count() == 2
 
-    # Go to cart, confirm both are there
     inventory.open_cart()
     cart = CartPage(page, base_url)
     assert cart.items_count() == 2
 
-    # Act: Continue Shopping → back to inventory
     cart.continue_shopping()
     expect(page).to_have_url(f"{base_url}/inventory.html")
 
     # Assert: cart state survived the round-trip
     assert inventory.cart_badge_count() == 2, "Cart should still hold 2 items"
-    

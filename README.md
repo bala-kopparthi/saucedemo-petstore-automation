@@ -8,34 +8,78 @@ This is for demonstrating End-to-end test automation portfolio project:
 [![CI](https://github.com/bala-kopparthi/saucedemo-petstore-automation/actions/workflows/ci.yml/badge.svg)](https://github.com/bala-kopparthi/saucedemo-petstore-automation/actions/workflows/ci.yml)
 [![Allure Report](https://img.shields.io/badge/Allure-Live%20Report-success)](https://bala-kopparthi.github.io/saucedemo-petstore-automation/)
 
-> **Status:** scaffolding in progress — sections below will be filled in as the project is built step by step.
+> **Status:** Completed — sections below are filled with a detailed step by step analysis.
 
 ---
 
 ## Tech stack
 
-| Layer | Tool |
-|---|---|
-| Language | Python 3.12+ |
-| Browser automation | Playwright (Python) |
+| Layer | Tool                         |
+|---|------------------------------|
+| Language | Python 3.14                  |
+| Browser automation | Playwright (Python)          |
 | API testing | Playwright APIRequestContext |
-| Test runner | pytest |
-| Reporting | Allure + pytest-html |
-| CI | GitHub Actions + Jenkins |
+| Test runner | pytest                       |
+| Reporting | Allure + pytest-html         |
+| CI | GitHub Actions + Jenkins     |
 
 ## Project structure
 
-_TBD — added in a later step._
+| Path | Purpose |
+|---|---|
+| `ui/pages/` | Page Objects — base + login, inventory, cart, and three checkout pages |
+| `ui/tests/` | UI tests — login, cart, inventory, checkout, e2e |
+| `ui/data/` | Shared UI test data — user-type and product-name constants |
+| `api/clients/pet_client.py` | Service wrapper over the Petstore `/pet` endpoints |
+| `api/tests/test_pet_api.py` | API tests A1–A7 (CRUD, search, negative, image upload) |
+| `api/data/` | Pet payload factory + `sample_pet.png` upload asset |
+| `conftest.py` | Shared pytest fixtures — base URLs, credentials, API context, login, failure screenshots |
+| `pytest.ini` | Markers and default pytest options |
+| `flows.txt` | UI test-design document (scenarios + rationale) |
+| `api/api-tests.md` | API test plan |
+| `.github/workflows/ci.yml` | CI pipeline — smoke / regression / validation + Allure publish |
+| `requirements.txt` | Pinned dependencies |
+| `.env.example` | Environment-variable template (copy to `.env`) |
 
-## Quick start
+# Quick Start
+## 1. Clone
+git clone https://github.com/bala-kopparthi/saucedemo-petstore-automation.git
+cd saucedemo-petstore-automation
 
-_TBD — added once `requirements.txt` is in place._
+## 2. Virtual environment (Python 3.14)
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 
-## Running the tests
+## 3. Dependencies
+pip install -r requirements.txt
 
-_TBD — locally, from PyCharm, from GitHub Actions, from Jenkins._
+## 4. Playwright browsers
+playwright install               # or: playwright install chromium
 
-## Reporting
+## 5. Environment file
+cp .env.example .env             # defaults work as-is; SauceDemo creds are public
+
+# Running the tests
+
+## By tier
+pytest -m smoke                  # P0 — fast critical path
+pytest -m regression             # P1 — broader functional
+pytest -m negative               # P2 — validation / error paths
+
+## By layer
+pytest -m ui                     # SauceDemo UI only
+pytest -m api                    # Petstore API only
+
+## Cross-browser (matches the CI regression job)
+pytest -m regression --browser chromium --browser firefox --browser webkit
+
+## Handy flags
+pytest --headed                  # watch the browser
+pytest -n auto                   # parallel (pytest-xdist is installed)
+pytest -k login -v               # filter by name, verbose
+
+
+# Reporting
 
 **📊 Live report (auto-published by CI):** <https://bala-kopparthi.github.io/saucedemo-petstore-automation/>
 

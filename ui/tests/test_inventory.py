@@ -6,7 +6,7 @@ Scenarios covered:
     R2 | Sort by name:  A→Z and Z→A, verify actual order            [regression]
 
 All tests start from an already-authenticated inventory page via the
-`logged_in_inventory` fixture (defined in the root conftest.py).
+`logged_in_inventory` fixture.
 """
 
 import pytest
@@ -30,18 +30,12 @@ def test_inventory_sorted_by_price(
     logged_in_inventory: InventoryPage, sort_value: str, descending: bool
 ) -> None:
     """R1: selecting a price sort reorders products correctly.
-
-    We read the displayed order and assert it equals that same list sorted
-    by Python — proving the UI's ordering matches the expected contract,
-    without hard-coding fragile price values.
     """
     inventory = logged_in_inventory
 
-    # Act: choose the price-sort option from the dropdown
     inventory.select_sort(sort_value)
 
-    # Assert: on-screen order matches a correctly-sorted copy of itself
-    prices = inventory.product_prices_in_order()       # e.g. [7.99, 9.99, ...]
+    prices = inventory.product_prices_in_order()
     assert prices == sorted(prices, reverse=descending), (
         f"Prices not sorted (descending={descending}): {prices}"
     )
@@ -71,4 +65,3 @@ def test_inventory_sorted_by_name(
     assert names == sorted(names, reverse=descending), (
         f"Names not sorted (descending={descending}): {names}"
     )
-    

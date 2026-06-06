@@ -16,9 +16,10 @@ class CheckoutCompletePage(BasePage):
 
     URL_PATH = "/checkout-complete.html"
 
-    # The exact heading text SauceDemo displays on success. Stored as a
-    # class constant so tests can import and compare against it without
-    # duplicating the literal string.
+    """The exact heading text SauceDemo displays on success. 
+    Stored as a class constant so tests can import and compare against it without
+    duplicating the literal string."""
+
     SUCCESS_HEADING_TEXT = "Thank you for your order!"
 
     def __init__(self, page: Page, base_url: str) -> None:
@@ -31,9 +32,7 @@ class CheckoutCompletePage(BasePage):
         # --- Back to inventory button ---
         self.back_home_button: Locator = page.locator('[data-test="back-to-products"]')
 
-    # ------------------------------------------------------------------
     # Read helpers
-    # ------------------------------------------------------------------
 
     def heading_text(self) -> str:
         """The big 'Thank you for your order!' heading text."""
@@ -46,9 +45,7 @@ class CheckoutCompletePage(BasePage):
             and self.heading_text() == self.SUCCESS_HEADING_TEXT
         )
 
-    # ------------------------------------------------------------------
     # Actions
-    # ------------------------------------------------------------------
 
     def back_to_products(self) -> None:
         """Return user to the inventory page."""

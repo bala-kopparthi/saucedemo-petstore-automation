@@ -62,12 +62,8 @@ def test_checkout_step_one_empty_fields_show_validation_errors(
 @allure.severity(allure.severity_level.MINOR)
 @allure.label("defect_type", "known / tracked")
 @allure.description(
-    "DOCUMENTED SAUCEDEMO DEFECT (not an accidental skip).\n\n"
-    "For `error_user`, the Last Name field on Checkout Step One rejects "
-    "typed characters. This test asserts the CORRECT behaviour (the field "
-    "SHOULD accept input), so against the live broken site it fails on "
-    "purpose and pytest reports XFAIL — Allure shows this as grey.\n\n"
-    "This is the EXPECTED state. The day SauceDemo fixes the bug, the test will XPASS, which is our signal to remove the xfail marker and promote it to a normal passing test."
+    "For `error_user`, the Last Name field on Checkout Step One rejects keyboard input "
+    "This is the expected test. The day SauceDemo fixes the bug, the test will XPASS, which is our signal to remove the xfail marker and promote it to a normal passing test."
 )
 @pytest.mark.negative
 @pytest.mark.ui
@@ -77,11 +73,7 @@ def test_error_user_can_type_last_name_at_checkout(
     page: Page, base_url: str
 ) -> None:
     """N4: error_user SHOULD be able to type a last name (positive intent).
-
-    Documents a known SauceDemo defect: error_user cannot enter text in the
-    Last Name field via the keyboard. We assert the CORRECT behavior, so the
-    broken live site makes pytest report XFAIL today. If SauceDemo fixes it,
-    this flips to XPASS — the signal to remove the xfail marker.
+    If SauceDemo fixes it, this flips to XPASS — the signal to remove the xfail marker.
     """
     # Arrange: log in as error_user (not the standard fixture) → checkout step 1
     login = LoginPage(page, base_url)

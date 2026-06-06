@@ -21,7 +21,6 @@ class CheckoutStepOnePage(BasePage):
 
         # --- Form fields ---
         # Exposed as public attributes so individual tests can call
-        # .fill() or .input_value() directly when they need granular control
         self.first_name_input: Locator = page.locator('[data-test="firstName"]')
         self.last_name_input: Locator = page.locator('[data-test="lastName"]')
         self.postal_code_input: Locator = page.locator('[data-test="postalCode"]')
@@ -34,9 +33,7 @@ class CheckoutStepOnePage(BasePage):
         # SauceDemo reuses [data-test="error"] across forms — same as login page.
         self.error_message: Locator = page.locator('[data-test="error"]')
 
-    # ------------------------------------------------------------------
     # Actions
-    # ------------------------------------------------------------------
 
     def fill_information(self, first_name: str, last_name: str, postal_code: str) -> None:
         """Fill all three form fields in one call. The convenience method
@@ -53,9 +50,7 @@ class CheckoutStepOnePage(BasePage):
         """Abandon checkout — returns to the cart."""
         self.cancel_button.click()
 
-    # ------------------------------------------------------------------
     # Read helpers (for negative tests)
-    # ------------------------------------------------------------------
 
     def is_error_visible(self) -> bool:
         """True if the red error banner is showing."""

@@ -10,9 +10,6 @@ import random
 
 def unique_pet_id() -> int:
     """Return a wide random id, unlikely to collide with other sandbox users.
-
-    petstore.swagger.io is shared globally; a wide random range keeps each
-    test's pet isolated from everyone else's data.
     """
     return random.randint(10_000_000, 99_999_999)
 
@@ -23,9 +20,6 @@ def build_pet(
     status: str = "available",
 ) -> dict:
     """Build a valid Pet payload (Swagger v2 Pet schema).
-
-    Only `name` and `photoUrls` are strictly required by the spec; we include
-    category and tags too so read/update assertions have fields to verify.
     """
     return {
         "id": pet_id,

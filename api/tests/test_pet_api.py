@@ -135,10 +135,6 @@ def test_upload_pet_image_returns_200(
     pet_client: PetClient, created_pet: dict
 ) -> None:
     """A7: POST /pet/{id}/uploadImage accepts a multipart file upload.
-
-    Sandbox limitation (see api-tests.md): the uploaded image can't be
-    retrieved afterward, so we assert only that the server accepted the file
-    (HTTP 200) and reported it in the response message.
     """
     assert SAMPLE_IMAGE.exists(), f"Missing test asset: {SAMPLE_IMAGE}"
 

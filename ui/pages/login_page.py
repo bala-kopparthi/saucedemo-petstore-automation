@@ -20,32 +20,21 @@ class LoginPage(BasePage):
         super().__init__(page, base_url)
 
         # --- Locators ---
-        # Defined once here, reused across methods below.
-        # We prefer [data-test="..."] because SauceDemo's devs added these
-        # as explicit testing hooks (stable across UI redesigns).
         self.username_input: Locator = page.locator('[data-test="username"]')
         self.password_input: Locator = page.locator('[data-test="password"]')
         self.login_button: Locator = page.locator('[data-test="login-button"]')
         self.error_message: Locator = page.locator('[data-test="error"]')
 
-    # ------------------------------------------------------------------
     # Actions
-    # ------------------------------------------------------------------
 
     def login(self, username: str, password: str) -> None:
-        """Fill credentials and click Login.
-
-        Important: this method does NOT assert success or failure.
-        The test decides what success looks like by checking the URL
-        or the error message AFTER calling this method.
+        """Entering User credentials and click Login.
         """
         self.username_input.fill(username)
         self.password_input.fill(password)
         self.login_button.click()
 
-    # ------------------------------------------------------------------
     # Used by negative tests N1, N2
-    # ------------------------------------------------------------------
 
     def is_error_visible(self) -> bool:
         """True if the red error banner is showing on screen."""
@@ -56,4 +45,3 @@ class LoginPage(BasePage):
         if self.is_error_visible():
             return self.error_message.inner_text()
         return ""
-    

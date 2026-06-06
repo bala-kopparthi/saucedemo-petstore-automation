@@ -8,13 +8,12 @@ to demonstrate the pattern of externalising credentials from test code.
 
 import os
 
-# ── Password ──────────────────────────────────────────────────────────
+# ── Password ───────────────
 # All SauceDemo users share the same password.
-# Sourced from .env so the pattern of "credentials live outside code" holds
-# even when the credential isn't actually secret.
+
 SAUCE_PASSWORD: str = os.getenv("SAUCEDEMO_VALID_PASSWORD", "secret_sauce")
 
-# ── User types ────────────────────────────────────────────────────────
+# ── User types ─────────────
 STANDARD_USER = "standard_user"
 LOCKED_OUT_USER = "locked_out_user"
 PROBLEM_USER = "problem_user"

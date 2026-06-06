@@ -1,9 +1,7 @@
 """
 PetClient — a thin service wrapper over the Swagger Petstore Pet endpoints.
 
-Mirrors the Page Object Model from Part 1: tests express intent
-(pet_client.create(pet)) while HTTP details (paths, verbs, params, multipart)
-live here in one place. Every method returns the raw Playwright APIResponse so
+Mirrors the Page Object Model from Part 1: Every method returns the raw Playwright APIResponse so
 the calling test asserts on both the status code and the JSON body.
 """
 
@@ -22,7 +20,7 @@ class PetClient:
 
     # ── CRUD ──────────────────────────────────────────────────────────
     def create(self, pet: dict) -> APIResponse:
-        """POST /pet — add a new pet. A dict body is serialized to JSON."""
+        """POST /pet — add a new pet. """
         return self._request.post(self.PET_PATH, data=pet)
 
     def get(self, pet_id: int) -> APIResponse:
@@ -30,7 +28,7 @@ class PetClient:
         return self._request.get(f"{self.PET_PATH}/{pet_id}")
 
     def update(self, pet: dict) -> APIResponse:
-        """PUT /pet — update an existing pet (send the full object)."""
+        """PUT /pet — update an existing pet """
         return self._request.put(self.PET_PATH, data=pet)
 
     def delete(self, pet_id: int) -> APIResponse:
@@ -47,10 +45,6 @@ class PetClient:
     # ── Upload (multipart) ────────────────────────────────────────────
     def upload_image(self, pet_id: int, image_path: str | Path) -> APIResponse:
         """POST /pet/{id}/uploadImage — multipart/form-data file upload.
-
-        We read the file into a buffer and pass it via Playwright's `multipart`
-        argument; Playwright sets the multipart Content-Type + boundary itself
-        (which is why the request fixture no longer forces application/json).
         """
         image_path = Path(image_path)
         return self._request.post(

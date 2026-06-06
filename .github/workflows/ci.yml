@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 jobs:
-  # ── P0: fast gate on every commit ─────────────────────────────────────
+  # ── P0: fast gate on every commit ────────────────
   smoke:
     name: Smoke (Chromium)
     runs-on: ubuntu-latest

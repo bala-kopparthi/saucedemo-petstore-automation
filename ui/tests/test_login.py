@@ -50,8 +50,6 @@ def test_standard_user_login_lands_on_inventory(
     expect(page).to_have_url(f"{base_url}/inventory.html")
 
     # Assert: all 6 products are rendered
-    # Using plain `assert` here because products_count() returns a Python int —
-    # expect() is for Playwright Locators, assert is for computed Python values.
     inventory = InventoryPage(page, base_url)
     assert inventory.products_count() == 6, (
         f"Expected 6 products, found {inventory.products_count()}"
@@ -132,10 +130,6 @@ def test_valid_user_types_reach_inventory(
 ) -> None:
     """P1: standard_user, problem_user, performance_glitch_user, visual_user
     all successfully log in and reach inventory.
-
-    @pytest.mark.parametrize runs this function once per entry in VALID_USERS.
-    You will see 4 test entries in the output: test_valid_user...[standard_user],
-    [...problem_user], etc.
     """
     login_page = LoginPage(page, base_url)
     login_page.navigate()
@@ -153,12 +147,6 @@ def test_performance_glitch_user_loads_inventory_within_limit(
     page: Page, base_url: str
 ) -> None:
     """P2: performance_glitch_user — inventory page should load within 10s.
-
-    SauceDemo intentionally adds ~5s latency for this user to simulate a
-    sluggish backend. We verify it still completes within a generous limit.
-
-    Note: uses wall-clock timing with time.time() — this is a soft
-    upper-bound check, not a substitute for real perf tooling (Lighthouse/k6).
     """
     login_page = LoginPage(page, base_url)
     login_page.navigate()
@@ -174,4 +162,3 @@ def test_performance_glitch_user_loads_inventory_within_limit(
         f"Inventory took {elapsed:.2f}s to load for performance_glitch_user "
         f"(limit: 10s)"
     )
-    

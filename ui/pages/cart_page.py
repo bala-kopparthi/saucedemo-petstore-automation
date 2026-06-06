@@ -21,7 +21,7 @@ class CartPage(BasePage):
 
         # --- Cart items ---
         # Each row has class .cart_item; we read names from the same
-        # .inventory_item_name selector SauceDemo reuses across pages.
+
         self.cart_items: Locator = page.locator(".cart_item")
         self.cart_item_names: Locator = page.locator(".cart_item .inventory_item_name")
 
@@ -29,9 +29,7 @@ class CartPage(BasePage):
         self.continue_shopping_button: Locator = page.locator('[data-test="continue-shopping"]')
         self.checkout_button: Locator = page.locator('[data-test="checkout"]')
 
-    # ------------------------------------------------------------------
     # Read helpers
-    # ------------------------------------------------------------------
 
     def items_count(self) -> int:
         """How many cart_item rows are rendered (0 when cart is empty)."""
@@ -45,15 +43,11 @@ class CartPage(BasePage):
         """True if a product with the given display name is in the cart."""
         return product_name in self.item_names()
 
-    # ------------------------------------------------------------------
     # Actions
-    # ------------------------------------------------------------------
 
     def remove_item(self, product_name: str) -> None:
         """Click the Remove button for the named product on the cart row."""
         # SauceDemo uses the same data-test slug as the inventory page,
-        # so we reuse the same slug rule (delegated to InventoryPage to avoid
-        # duplication — but to keep CartPage self-contained, we inline it).
         slug = product_name.lower().replace(" ", "-")
         self.page.locator(f'[data-test="remove-{slug}"]').click()
 

@@ -24,11 +24,6 @@ class CheckoutStepTwoPage(BasePage):
         self.cart_item_names: Locator = page.locator(".cart_item .inventory_item_name")
 
         # --- Currency labels ---
-        # Text content looks like:
-        #   "Item total: $29.99"
-        #   "Tax: $2.40"
-        #   "Total: $32.39"
-        # We parse the amount with _extract_amount() below.
         self.item_total_label: Locator = page.locator(".summary_subtotal_label")
         self.tax_label: Locator = page.locator(".summary_tax_label")
         self.grand_total_label: Locator = page.locator(".summary_total_label")
@@ -37,22 +32,13 @@ class CheckoutStepTwoPage(BasePage):
         self.finish_button: Locator = page.locator('[data-test="finish"]')
         self.cancel_button: Locator = page.locator('[data-test="cancel"]')
 
-    # ------------------------------------------------------------------
     # Helpers (private)
-    # ------------------------------------------------------------------
 
     @staticmethod
     def _extract_amount(text: str) -> float:
-        """Pull the dollar value out of strings like 'Tax: $2.40' -> 2.40.
+        """Pull the dollar value out of strings like 'Tax: $2.40' -> 2.40."""
 
-        Splits on '$' and parses the trailing decimal. Will raise ValueError
-        if the format ever changes — which is the right failure mode (loud,
-        not silent)."""
-        return float(text.split("$")[1])
-
-    # ------------------------------------------------------------------
     # Read helpers
-    # ------------------------------------------------------------------
 
     def items_count(self) -> int:
         """Number of cart items being reviewed."""
@@ -74,9 +60,7 @@ class CheckoutStepTwoPage(BasePage):
         """Final total shown to the customer (e.g., 32.39)."""
         return self._extract_amount(self.grand_total_label.inner_text())
 
-    # ------------------------------------------------------------------
     # Actions
-    # ------------------------------------------------------------------
 
     def finish(self) -> None:
         """Place the order — advances to the confirmation page."""

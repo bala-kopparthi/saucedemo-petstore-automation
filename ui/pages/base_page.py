@@ -1,10 +1,5 @@
 """
 BasePage — repository for all SauceDemo page objects.
-
-Why a base class?
-this is main home for URL handling, navigation, and shared helpers
-- Subclasses only need to implement what is unique to their page
-- Reduces duplication across LoginPage, InventoryPage, etc.
 """
 
 from playwright.sync_api import Page
@@ -13,18 +8,11 @@ from playwright.sync_api import Page
 class BasePage:
     """Parent class for every page object in this project."""
 
-    # Each subclass overrides this with its own relative URL path.
-    # Example: LoginPage sets URL_PATH = "/", InventoryPage sets "/inventory.html"
+    # LoginPage sets URL_PATH = "/", InventoryPage sets "/inventory.html"
     URL_PATH: str = "/"
 
     def __init__(self, page: Page, base_url: str) -> None:
         """The Constructor - Store the Playwright page handle and the project's base URL.
-
-        Args:
-            page: Playwright Page object — comes from the pytest-playwright
-                  `page` fixture. Represents one browser tab.
-            base_url: Project base URL from the `base_url` fixture in
-                  conftest.py (e.g., https://www.saucedemo.com).
         """
         self.page = page #Store the parameter as an instance attribute
         self.base_url = base_url
