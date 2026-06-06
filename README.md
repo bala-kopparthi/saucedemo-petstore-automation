@@ -40,6 +40,7 @@ This is for demonstrating End-to-end test automation portfolio project:
 | `.github/workflows/ci.yml` | CI pipeline — smoke / regression / validation + Allure publish |
 | `requirements.txt` | Pinned dependencies |
 | `.env.example` | Environment-variable template (copy to `.env`) |
+| `Jenkinsfile` | Local Jenkins pipeline — checkout, venv setup, run suite, publish Allure |
 
 # Quick Start
 ## 1. Clone
@@ -78,6 +79,9 @@ pytest --headed                  # watch the browser
 pytest -n auto                   # parallel (pytest-xdist is installed)
 pytest -k login -v               # filter by name, verbose
 
+## Continuous integration
+- **GitHub Actions** (`.github/workflows/ci.yml`) — runs smoke / regression / validation, publishes Allure to GitHub Pages.
+- **Jenkins** (`Jenkinsfile`) — local pipeline: checkout → Python/Playwright venv → run suite → publish Allure via the Allure Jenkins plugin.
 
 # Reporting
 
@@ -87,8 +91,8 @@ This URL always serves the latest CI run, published automatically to GitHub Page
 by the `publish-report` job in `.github/workflows/ci.yml`. The instructions below
 are for generating the same report **locally**.
 
-This suite uses [Allure](https://allurereport.org/) for rich, leadership-friendly
-reports — charts, history trends, and per-test failure evidence (screenshots + URLs).
+This suite uses [Allure](https://allurereport.org/) for providing reports — 
+charts, history trends, and per-test failure evidence (screenshots + URLs).
 
 **Prerequisites:** `allure-pytest` (in `requirements.txt`, records results) and the
 Allure CLI (renders the HTML report):
