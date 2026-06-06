@@ -29,7 +29,7 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    pytest --browser chromium --alluredir=allure-results
+                    pytest --browser chromium --clean-alluredir --alluredir=allure-results
                 '''
             }
         }

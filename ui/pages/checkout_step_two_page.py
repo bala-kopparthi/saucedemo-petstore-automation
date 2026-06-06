@@ -37,6 +37,7 @@ class CheckoutStepTwoPage(BasePage):
     @staticmethod
     def _extract_amount(text: str) -> float:
         """Pull the dollar value out of strings like 'Tax: $2.40' -> 2.40."""
+        return float(text.split("$")[1])
 
     # Read helpers
 
