@@ -1,0 +1,86 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","5388","test_valid_user_types_reach_inventory[webkit-performance_glitch_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","407","test_valid_user_types_reach_inventory[firefox-visual_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","327","test_valid_user_types_reach_inventory[chromium-visual_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R4: on the overview page, item subtotal + tax must equal grand total.","393","test_checkout_summary_math_is_correct[webkit]","ui.tests","2026-06-07","passed","2026-06-07","","test_checkout","",""
+"R5: 'Continue Shopping' returns to inventory with cart intact.","166","test_continue_shopping_returns_to_inventory_preserving_cart[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"R1: selecting a price sort reorders products correctly.
+    ","44","test_inventory_sorted_by_price[chromium-low_to_high]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"For `error_user`, the Last Name field on Checkout Step One rejects keyboard input This is the expected test. The day SauceDemo fixes the bug, the test will XPASS, which is our signal to remove the xfail marker and promote it to a normal passing test.","470","test_error_user_can_type_last_name_at_checkout[chromium]","ui.tests","2026-06-07","skipped","2026-06-07","","test_checkout","",""
+"R1: selecting a price sort reorders products correctly.
+    ","89","test_inventory_sorted_by_price[firefox-high_to_low]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","5341","test_valid_user_types_reach_inventory[firefox-performance_glitch_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R2: selecting a name sort reorders products alphabetically.","41","test_inventory_sorted_by_name[chromium-z_to_a]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"A5: GET /pet/findByStatus?status=available returns available pets.","11","test_find_by_status_available_returns_available_pets","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","305","test_valid_user_types_reach_inventory[chromium-standard_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"S1: valid login navigates to /inventory.html with 6 products.","347","test_standard_user_login_lands_on_inventory[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","360","test_valid_user_types_reach_inventory[webkit-visual_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R3: add three products, remove one on the cart page, verify survivors.","407","test_remove_one_item_from_cart_updates_state[firefox]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"R5: 'Continue Shopping' returns to inventory with cart intact.","289","test_continue_shopping_returns_to_inventory_preserving_cart[webkit]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"N3: SauceDemo validates required fields one at a time, in order.","288","test_checkout_step_one_empty_fields_show_validation_errors[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_checkout","",""
+"A4: after DELETE /pet/{id}, a subsequent GET returns 404.","11","test_delete_pet_then_get_returns_404","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"P2: performance_glitch_user — inventory page should load within 10s.
+    ","5322","test_performance_glitch_user_loads_inventory_within_limit[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R2: selecting a name sort reorders products alphabetically.","68","test_inventory_sorted_by_name[firefox-a_to_z]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"R3: add three products, remove one on the cart page, verify survivors.","717","test_remove_one_item_from_cart_updates_state[webkit]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"N2: locked_out_user credentials → account locked error message.","265","test_locked_out_user_sees_lockout_error[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"A2: GET /pet/{id} returns the pet created by the fixture.","5","test_get_returns_the_created_pet","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"S3: complete a purchase from inventory through order confirmation.","281","test_full_checkout_happy_path[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_e2e","",""
+"R2: selecting a name sort reorders products alphabetically.","62","test_inventory_sorted_by_name[webkit-z_to_a]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"R1: selecting a price sort reorders products correctly.
+    ","60","test_inventory_sorted_by_price[webkit-high_to_low]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"R2: selecting a name sort reorders products alphabetically.","74","test_inventory_sorted_by_name[firefox-z_to_a]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"A6: GET /pet/{bogus_id} for a non-existent pet returns 404.","20","test_get_nonexistent_pet_returns_404","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","871","test_valid_user_types_reach_inventory[firefox-problem_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R1: selecting a price sort reorders products correctly.
+    ","96","test_inventory_sorted_by_price[firefox-low_to_high]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"R4: on the overview page, item subtotal + tax must equal grand total.","436","test_checkout_summary_math_is_correct[firefox]","ui.tests","2026-06-07","passed","2026-06-07","","test_checkout","",""
+"P2: performance_glitch_user — inventory page should load within 10s.
+    ","5423","test_performance_glitch_user_loads_inventory_within_limit[webkit]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"A3: PUT /pet updates an existing pet's name and status.","7","test_update_pet_changes_name_and_status","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"R3: add three products, remove one on the cart page, verify survivors.","212","test_remove_one_item_from_cart_updates_state[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"A1: POST /pet returns 200 and the response echoes id, name, status.","133","test_create_pet_returns_200_and_echoes_body","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"R4: on the overview page, item subtotal + tax must equal grand total.","264","test_checkout_summary_math_is_correct[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_checkout","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","733","test_valid_user_types_reach_inventory[firefox-standard_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","383","test_valid_user_types_reach_inventory[webkit-problem_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P2: performance_glitch_user — inventory page should load within 10s.
+    ","5674","test_performance_glitch_user_loads_inventory_within_limit[firefox]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","387","test_valid_user_types_reach_inventory[webkit-standard_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R2: selecting a name sort reorders products alphabetically.","59","test_inventory_sorted_by_name[webkit-a_to_z]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"R2: selecting a name sort reorders products alphabetically.","38","test_inventory_sorted_by_name[chromium-a_to_z]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"R1: selecting a price sort reorders products correctly.
+    ","40","test_inventory_sorted_by_price[chromium-high_to_low]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
+"S4: hamburger menu → Logout → user lands back on login page.","1259","test_logout_returns_to_login_page[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"A7: POST /pet/{id}/uploadImage accepts a multipart file upload.
+    ","58","test_upload_pet_image_returns_200","api.tests","2026-06-07","passed","2026-06-07","","test_pet_api","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","323","test_valid_user_types_reach_inventory[chromium-problem_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"N1: submitting empty form → 'Username is required' error banner.","265","test_empty_credentials_shows_username_required_error[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"P1: standard_user, problem_user, performance_glitch_user, visual_user
+all successfully log in and reach inventory.
+","5318","test_valid_user_types_reach_inventory[chromium-performance_glitch_user]","ui.tests","2026-06-07","passed","2026-06-07","","test_login","",""
+"R5: 'Continue Shopping' returns to inventory with cart intact.","302","test_continue_shopping_returns_to_inventory_preserving_cart[firefox]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"S2: adding one product makes the cart badge show 1.","50","test_add_single_product_increments_cart_badge[chromium]","ui.tests","2026-06-07","passed","2026-06-07","","test_cart","",""
+"R1: selecting a price sort reorders products correctly.
+    ","61","test_inventory_sorted_by_price[webkit-low_to_high]","ui.tests","2026-06-07","passed","2026-06-07","","test_inventory","",""
