@@ -134,4 +134,31 @@ allure open allure-report
 1. `flows.txt` at repo root — UI test scenarios explained
 2. `api/api-tests.md` — API endpoints covered + how to run
 
+## Roadmap / Next steps — AI-resilient testing
+
+These are planned enhancements that apply AI-driven testing concepts to this
+framework. They are design intentions, **not yet implemented**.
+
+- **Self-healing locators using Local LLM:** When a Playwright selector breaks, call a
+  locally-hosted model (Ollama) with the failing locator + page HTML and recover an
+  alternative at runtime — heals the run, not the source.
+
+- **Healing visibility.** Every heal is logged (both old & new locator) and surfaced in
+  the Allure report, so self-healing will always highlights real UI defect.
+
+- **Locator cache (SQLite).** Save healed locators to avoid repeat LLM calls —
+  that way, we can track what changed, faster reruns plus nearly zero cost.
+
+- **Semantic-context healing.** Locators carry their purpose (for example "username field"), so
+  recovery works even when ids/classes change entirely.
+
+- **AI Visual Testing.** Vision-model comparison of baseline vs current screenshots —
+  logical diffs (layout/alignment/CSS), beyond pixel matching.
+
+- **Local-LLM-first.** Main intention is to safeguard Privacy (nothing leaves the network), predictable cost,
+  continuous CI; cloud models optional behind the same interface.
+
+Roadmap principle (in the future): AI is used **assistively** (only when a deterministic check fails),
+not as an always-on dependency — keeping runs cheap, fast, and reviewable.
+
 ---
