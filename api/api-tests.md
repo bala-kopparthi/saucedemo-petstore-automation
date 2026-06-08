@@ -10,8 +10,8 @@
 
 ## 1. Purpose
 This document describes the API test scenarios for the Swagger Petstore **Pet**
-resource, the rationale behind the coverage, and what is intentionally out of
-scope. Read this **before** the test code — it explains *why* these tests exist.
+resource, the strategy behind the coverage, and what is intentionally out of
+scope. Read this **before** the test code.
 
 ## 2. Tools & why
 - **Playwright `APIRequestContext`** — same framework as Part 1 (UI), so a single
@@ -69,7 +69,12 @@ Coverage follows the resource lifecycle plus its boundaries:
 1. `POST /pet/{id}` form-data update — redundant with `PUT /pet`.
 2. **Store** and **User** endpoint groups — the assignment scopes Part 2 to the
    **Pet** endpoints.
-3. API-key / auth flows — the public Petstore does not enforce them on Pet.
+3. **API token-auth coverage.** The Petstore demo declares OAuth2 / `api_key` but
+  doesn't enforce it, so auth isn't tested here. 
+  Against an auth-enforcing API the suite would add 
+  - token issuance (valid/invalid login)
+  - access control (valid → 200, missing/invalid/expired → 401)
+  - and authorization (insufficient scope/role → 403) — proving the gate ****closes****.
 
 ## 7. How to run
 > Run from the repo root with the virtual environment active.
